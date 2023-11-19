@@ -10,17 +10,9 @@
     "watch:serve": "node --env-file=.env.dev --loader ts-node/esm ./src/app.ts",
     "generate-data": "node --env-file=.env.dev --loader ts-node/esm ./src/app.ts --generate"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NikolayKovzik/Express-Playground.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NikolayKovzik/Express-Playground/issues"
-  },
-  "homepage": "https://github.com/NikolayKovzik/Express-Playground#readme",
   "dependencies": {
     "@types/express": "^4.17.21",
     "cors": "^2.8.5",

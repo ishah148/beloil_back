@@ -24,7 +24,7 @@ export class FlightReservation {
   @Column({ name: "notes", nullable: true, length: 64 })
   notes: string
 
-  @ManyToOne(() => Flight, (flight: Flight) => flight.flightId)
+  @ManyToOne(() => Flight, (flight: Flight) => flight.flightId, { onDelete: "CASCADE" })
   @JoinColumn({ name: 'flight_id' })
   flight: Flight;
 }

@@ -1,11 +1,10 @@
-import { DataSource, QueryRunner } from "typeorm"
+import { DataSource } from "typeorm"
 import databaseConfig from "./config";
 
 
-async function createQueryRunner(appDataSource: DataSource): Promise<QueryRunner> {
-  return appDataSource.createQueryRunner();
-}
 
 export const AppDataSource = new DataSource(databaseConfig);
 
-export const queryRunner = await createQueryRunner(AppDataSource);
+export const queryRunner = await AppDataSource.createQueryRunner();
+
+export const queryBuilder = await AppDataSource.createQueryBuilder();

@@ -1,11 +1,7 @@
 import { Flight } from '../entities/flight.entity'
 import FlightService from "../services/flight.service";
+import { FlightParams } from '../types/flights';
 
-
-// export interface IFlightPayload {
-//   flightId: string;
-//   date: Date;
-// }
 
 export default class FlightController {
   private flightService: FlightService;
@@ -14,16 +10,11 @@ export default class FlightController {
     this.flightService = new FlightService();
   }
 
-  public async getFlights(): Promise<Array<Flight>> {
-    return this.flightService.getFlights()
+  public async getFlights(flightParams: FlightParams): Promise<Array<Flight>> {
+    return this.flightService.getFlights(flightParams)
   }
 
   public async getFlight(id: string): Promise<Flight | null> {
     return this.flightService.getFlightByID(id)
   }
-
-
-  // public async createFlight( body: IFlightPayload): Promise<Flight> {
-  //   return createComment(body)
-  // }
 }

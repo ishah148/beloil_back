@@ -15,7 +15,7 @@ const databaseConfig :  DataSourceOptions = {
   database: process.env.MYSQL_DATABASE || "avia",
   entities: [__dirname + "/../entities/*.entity.{js,ts}"],
   multipleStatements: true,
-  // logging: true,
+  logging: true,
   synchronize: true,
   // migrations: [__dirname + "/migrations/*.ts"],
 }

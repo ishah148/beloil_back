@@ -15,6 +15,22 @@ export type FlightParams = {
   sortOrder?: 0 | 1;
 }
 
+export type FlightCreateDTO = {
+  flightId: string;
+  city: string;
+  departureTime: Date;
+  airlineName: string;
+  checkinTime: Date;
+  seatCapacity: number;
+  notes: string;
+}
+
+export type FlightUpdateDTO = {
+  flightId: string;
+  departureTime: Date;
+  checkinTime: Date;
+}
+
 type Stringify<T> = {
   [K in keyof T]: string;
 };

@@ -4,23 +4,23 @@ import { Entity, Column, PrimaryColumn } from "typeorm"
 @Entity({ name: "flight" })
 export class Flight {
   @PrimaryColumn({ name: "flight_id", length: 16 })
-  flightId: string
+  flightId: string;
 
   @Column({ name: "city", length: 32 })
-  city: string
+  city: string;
 
   @Column({ name: "departure_time" })
-  departureTime: Date
+  departureTime: Date;
 
   @Column({ name: "airline_name", length: 32 })
-  airlineName: string
+  airlineName: string;
 
   @Column({ name: "checkin_time" })
-  checkinTime: Date
+  checkinTime: Date;
 
   @Column({ name: "seat_capacity", type: 'smallint' })
-  seatCapacity: number
+  seatCapacity: number;
 
   @Column({ name: "notes", nullable: true, length: 64 })
-  notes: string
+  notes: string;
 }

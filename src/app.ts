@@ -3,7 +3,7 @@ import Router from './routes';
 import initDatabaseConnection from './database/init-db-connection';
 import cors from "cors";
 import shouldGenerateDBValues from "./utils/should-generate-DB-values";
-import { generateTablesData } from "./database/generate-tables-data";
+import {generateTablesData} from "./database/generate-tables-data";
 
 
 async function configureApplication() {
@@ -23,15 +23,17 @@ async function configureApplication() {
         }
         process.exit();
     } else {
-        const app = express();
-
-        app.use(express.json());
-        app.use(cors())
-        app.use(Router);
-
-        app.listen(+process.env.APP_PORT, async () => {
-            console.log('server is running on port 8081');
-        });
+        try {
+            const app = express();
+            app.use(express.json());
+            app.use(cors())
+            app.use(Router);
+            app.listen(+process.env.APP_PORT, async () => {
+                console.log('server is running on port 8081');
+            });
+        } catch (e) {
+            console.log("e",e)
+        }
     }
 }
 

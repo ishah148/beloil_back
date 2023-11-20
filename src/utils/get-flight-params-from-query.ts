@@ -25,7 +25,7 @@ export function getFlightParamsFromQuery(flightRequestQueryParams: FlightRequest
         flightParams[typedKey] = +flightRequestQueryParams[typedKey] as 0 | 1;
       }
 
-      if(typedKey === 'sortField') {
+      if(typedKey === 'sort') {
         flightParams[typedKey] = flightRequestQueryParams[typedKey] as keyof Flight;
       }
     }
@@ -36,13 +36,13 @@ export function getFlightParamsFromQuery(flightRequestQueryParams: FlightRequest
 
 
 function isNumericParam(key: keyof FlightParams): key is NumericField {
-  return key === 'limit' || key === 'page' || key === 'pageCount' || key === 'seatCapacityFilter';
+  return key === 'limit' || key === 'page' || key === 'seatCapacity';
 }
 
 function isStringParam(key: keyof FlightParams): key is StringField {
-  return key === 'flightIdFilter' || key === 'cityFilter' || key === 'airlineNameFilter' || key === 'notesFilter';
+  return key === 'flightId' || key === 'city' || key === 'airlineName' || key === 'notes';
 }
 
 function isDateParam(key: keyof FlightParams): key is DateField {
-  return key === 'departureTimeFilter' || key === 'checkinTimeFilter';
+  return key === 'departureTime' || key === 'checkinTime';
 }

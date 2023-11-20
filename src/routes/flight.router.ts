@@ -8,12 +8,16 @@ const router = express.Router();
 
 router.get("/", async (req: RequestWithQuery<FlightRequestQueryParams>, res) => {
   const controller = new FlightController();
-  
-  const flightParams: FlightParams = getFlightParamsFromQuery(req.query);
 
-  console.log(flightParams);
-  const response = await controller.getFlights(flightParams);
-  return res.send(response);
+  try {
+    const flightParams: FlightParams = getFlightParamsFromQuery(req.query);
+    console.log(flightParams);
+    const response = await controller.getFlights(flightParams);
+    return res.send(response);
+  }catch (e) {
+    console.log("path:/",e)
+  }
+
 });
 
 router.get("/:id", async (req: RequestWithParams<{id: string}>, res) => {

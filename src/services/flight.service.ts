@@ -11,42 +11,41 @@ export default class FlightService {
     this.flightRepository = AppDataSource.getRepository(Flight);
   }
 
-  public async getFlights(flightParams: FlightParams): Promise<Array<Flight>> {
+  public async getFlights({ page, limit, airlineName, checkinTime, city, departureTime, notes, seatCapacity, sort, sortOrder }: FlightParams): Promise<Array<Flight>> {
 
     const queryBuilder: SelectQueryBuilder<Flight> = this.flightRepository.createQueryBuilder('flight');
-    //присылать только объект с фильтрами, чтобы это можно было сделать универсально
-    // Object.keys(filters).forEach((key) => {
-    //   const value = filters[key];
 
-    //   queryBuilder.andWhere(`entity.${key} = :${key}`, { [key]: value });
-    // });
-
-    if (flightParams.airlineNameFilter) {
-      queryBuilder.andWhere(`flight.airlineName = :airlineName`, { airlineName: flightParams.airlineNameFilter });
+    if (airlineName) {
+      queryBuilder.andWhere(`flight.airlineName = :airlineName`, { airlineName: `${airlineName}%` });
     }
 
-    if (flightParams.checkinTimeFilter) {
-      queryBuilder.andWhere(`flight.checkinTime = :checkinTime`, { checkinTime: flightParams.checkinTimeFilter });
+    if (checkinTime) {
+      queryBuilder.andWhere(`DATE(flight.checkinTime) = DATE(:checkinTime)`, { checkinTime: checkinTime });
     }
 
-    if (flightParams.cityFilter) {
-      queryBuilder.andWhere(`flight.city = :city`, { city: flightParams.cityFilter });
+    if (city) {
+      queryBuilder.andWhere(`flight.city LIKE :city`, { city: `${city}%` });
     }
 
-    if (flightParams.departureTimeFilter) {
-      queryBuilder.andWhere(`flight.departureTime = :departureTime`, { departureTime: flightParams.departureTimeFilter });
+    if (departureTime) {
+      queryBuilder.andWhere(`DATE(flight.departureTime) = DATE(:departureTime)`, { departureTime: departureTime });
     }
 
-    if (flightParams.notesFilter) {
-      queryBuilder.andWhere(`flight.notes = :notes`, { notes: flightParams.notesFilter });
+    if (notes) {
+      queryBuilder.andWhere(`flight.notes = :notes`, { notes: `${notes}%` });
     }
 
-    if (flightParams.seatCapacityFilter) {
-      queryBuilder.andWhere(`flight.seatCapacity = :seatCapacity`, { seatCapacity: flightParams.seatCapacityFilter });
+    if (seatCapacity) {
+      queryBuilder.andWhere(`flight.seatCapacity >= :seatCapacity`, { seatCapacity: seatCapacity });
     }
 
-    queryBuilder.orderBy(`flight.${flightParams.sortField}`, `${flightParams.sortOrder == 1 ? 'ASC' : flightParams.sortOrder == 0 ? 'DESC' : 'ASC'}`)
-
+    queryBuilder
+      .orderBy(
+        `flight.${sort ? sort : 'departureTime'}`,
+        `${sortOrder == 1 ? 'ASC' : sortOrder == 0 ? 'DESC' : 'ASC'}`
+      )
+      .skip((page - 1) * limit)
+      .take(limit)
     return await queryBuilder.getMany();
   }
 
